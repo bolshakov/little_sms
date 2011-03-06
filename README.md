@@ -2,13 +2,15 @@
 This gem provides access to LittleSMS.ru API from ruby.
 
 # Installation
-    gem install little_sms
+    $ gem install little_sms
 
 # Usage
     require "little_sms"
     api = LittleSMS.new(:apiuser, :apikey)
     api.message.send(:recipients => "112", :message => "Sos!")
+
 Also you can pass a block to LittleSMS object:
+
     LittleSMS.new(:apiuser, :apikey) do
       msg =  message.send(:recipients => "112", :message => "Sos!")
       if msg[:status] == :success
