@@ -1,3 +1,4 @@
+require "json"
 require "net/http"
 require "net/https"
 require 'digest/md5'
@@ -11,7 +12,7 @@ class LittleSMS
 
     def initialize(component, api_user, api_key)
       @api_uri = URI.parse("https://littlesms.ru:443/api/")
-      @options = {:user => api_user, :key => api_key}
+      @auth = {:user => api_user, :key => api_key}
       @component = component # Component name. E.g. message or user.
     end
 
@@ -22,11 +23,16 @@ class LittleSMS
     private
     def request_api_method(method, options = {})
       options ||= {}
-      options.merge!(@options)
+      options.merge!(@auth)
+
+      # Replace original sort method
+      options.extend(self.class::Options)
+      options.method_path = {:method => method, :component => @component }
+
       options[:sign] = sign_request(options)
       uri = @api_uri.merge("#{@component}/#{method}")
       req = Net::HTTP::Post.new(uri.path)
-      req.set_form_data(options)
+      req.set_form_data(options.delete_if {|k, v| k == :key})
 
       uri.scheme, uri.port, use_ssl = if LittleSMS.use_ssl
         ['https', 443, true]
@@ -38,16 +44,16 @@ class LittleSMS
 
       case res = res.start {|http| http.request(req) }
       when Net::HTTPSuccess, Net::HTTPRedirection
-        return res.body
+        return JSON.parse(res.body)
       else
         res.error!
       end
     end
 
     def sign_request(options)
-      Digest::MD5.hexdigest(Digest::SHA1.hexdigest(
-          options[:user].to_s +
-          options.reject {|key| [:user, :key].include?(key)}.values.join + options[:key].to_s))
+      Digest::MD5.hexdigest(
+          Digest::SHA1.hexdigest(options.sort.map {|e| e[1]}.join)
+        )
     end
   end
 end

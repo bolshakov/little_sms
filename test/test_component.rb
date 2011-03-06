@@ -5,13 +5,15 @@ require 'lib/little_sms'
 class ComponentTest < Test::Unit::TestCase
   context "A LittleSMS::Component" do
     def setup
-      @options = {:user=>:foo, :baz=>:bazz, :key=>:bar}
+      @options = {:message=>"sos", :recipients=>"112", :user=>'free', :key=>'Jesus'}
+      @options.extend(LittleSMS::Component::Options)
+      @options.method_path = {:method => :send, :component => :message }
     end
 
     should "should sign request" do
-      component = LittleSMS::Component.new(:noname, @options[:user], @options[:key])
+      component = LittleSMS::Component.new(:message, "Christ", "Jesus")
       sign = component.method(:sign_request).call(@options)
-      assert_equal "1c971171ab417c41c75d34e001c86403", sign
+      assert_equal "9ee9ac110901dae9ee9f97fde09f3268", sign
     end
   end
 end

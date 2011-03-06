@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "little_sms"
   gem.homepage = "http://github.com/TweeKane/little_sms"
   gem.license = "MIT"
-  gem.summary = %Q{LittleSMS API binding}
-  gem.description = %Q{LittleSMS API binding}
+  gem.summary = %Q{LittleSMS.ru API binding}
+  gem.description = %Q{LittleSMS.ru API binding}
   gem.email = "tweekane@gmail.com"
   gem.authors = ["Artyom Bolshakov"]
   gem.files = `git ls-files`.split("\n")
