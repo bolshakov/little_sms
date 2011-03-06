@@ -2,7 +2,7 @@
 This gem provides access to LittleSMS.ru API from ruby.
 
 # Installation
-``gem install little_sms``
+    gem install little_sms
 
 # Usage
     require "little_sms"
