@@ -44,7 +44,7 @@ class LittleSMS
 
       case res = res.start {|http| http.request(req) }
       when Net::HTTPSuccess, Net::HTTPRedirection
-        return JSON.parse(res.body)
+        return format_output(JSON.parse(res.body))
       else
         res.error!
       end
@@ -54,6 +54,22 @@ class LittleSMS
       Digest::MD5.hexdigest(
           Digest::SHA1.hexdigest(options.sort.map {|e| e[1]}.join)
         )
+    end
+
+    # Convert all strings keys to symbols
+    def format_output(hash)
+      format = lambda do |v|
+        if v.respond_to?(:map)
+          format_output(v)
+        else
+          v
+        end
+      end
+      if hash.kind_of? Hash
+        Hash[ hash.map { |k, v| [k.to_sym, format.call(v)] } ]
+      else
+        hash.map { |v| format.call(v) }
+      end
     end
   end
 end
