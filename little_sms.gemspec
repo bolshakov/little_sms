@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/little_sms/ordering/tag.yaml",
     "lib/little_sms/ordering/task.yaml",
     "lib/little_sms/ordering/user.yaml",
+    "little_sms.gemspec",
     "test/test_component.rb",
     "test/test_little_sms.rb",
     "test/test_options.rb"
