@@ -10,7 +10,7 @@
 :status:
 - :user
 - :sign
-- :message_id
+- :messages_id
 - :key
 :price:
 - :user
