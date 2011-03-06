@@ -14,6 +14,14 @@ class LittleSMSTest < Test::Unit::TestCase
       @sms.foo
       assert_equal(@sms.instance_eval { @components[:foo].class }, LittleSMS::Component)
     end
+
+    should "accept block" do
+      mes = nil
+      LittleSMS.new @api_user, @api_key do
+        mes = message
+      end
+      assert_equal(LittleSMS::Component, mes.class)
+    end
   end
 end
 
