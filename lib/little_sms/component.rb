@@ -44,7 +44,7 @@ class LittleSMS
 
       case res = res.start {|http| http.request(req) }
       when Net::HTTPSuccess, Net::HTTPRedirection
-        return format_output(JSON.parse(res.body))
+        return JSON.parse(res.body).recursive_symbolize_keys
       else
         res.error!
       end
@@ -55,21 +55,17 @@ class LittleSMS
           Digest::SHA1.hexdigest(options.sort.map {|e| e[1]}.join)
         )
     end
+  end
+end
 
-    # Convert all strings keys to symbols
-    def format_output(hash)
-      format = lambda do |v|
-        if v.respond_to?(:map)
-          format_output(v)
-        else
-          v
-        end
-      end
-      if hash.kind_of? Hash
-        Hash[ hash.map { |k, v| [k.to_sym, format.call(v)] } ]
-      else
-        hash.map { |v| format.call(v) }
-      end
+# Convert all keys to symbols
+module Enumerable
+  def recursive_symbolize_keys
+    symbolize = lambda { |v| v.respond_to?(:map) ? v.recursive_symbolize_keys : v }
+    if self.kind_of? Hash
+      Hash[ self.map { |k, v| [k.to_sym, symbolize.call(v)] } ]
+    else
+      self.map { |v| symbolize.call(v) }
     end
   end
 end

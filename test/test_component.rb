@@ -19,7 +19,7 @@ class ComponentTest < Test::Unit::TestCase
     should "format output" do
       out = {"recipients"=>["911", "112"], "messages_id"=>[], "count"=>1, "parts"=>1, "price"=>0.5, "balance"=>9, "test"=>1, "status"=>"success"}
       formatted = {:recipients=>["911", "112"], :messages_id=>[], :count=>1, :parts=>1, :price=>0.5, :balance=>9, :test=>1, :status=>"success"}
-      assert_equal formatted, @component.instance_eval("format_output(#{out})")
+      assert_equal formatted, out.recursive_symbolize_keys
     end
   end
 end
