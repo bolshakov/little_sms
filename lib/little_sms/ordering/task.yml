@@ -1,0 +1,6 @@
+---
+:delete:
+- :user
+- :id
+- :key
+

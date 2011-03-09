@@ -1,0 +1,20 @@
+---
+:list:
+- :user
+- :key
+:create:
+- :user
+- :phone
+- :name
+- :description
+- :tags
+- :key
+:update:
+- :user
+- :id
+- :key
+:delete:
+- :user
+- :id
+- :key
+
