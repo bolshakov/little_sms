@@ -5,8 +5,8 @@ require_relative '../lib/little_sms'
 class LittleSMSTest < Test::Unit::TestCase
   context "A LittleSMS" do
     def setup
-      @api_user = :testapiuser
-      @api_key = :testapikeystring
+      @api_user = :"acc-4fe53b2b"
+      @api_key = :"OZkgGZ7g"
       @sms = LittleSMS.new @api_user, @api_key
     end
 
@@ -24,7 +24,7 @@ class LittleSMSTest < Test::Unit::TestCase
     end
 
     should "send message" do
-      api = LittleSMS.new(:"acc-4fe53b2b", :"OZkgGZ7g")
+      api = LittleSMS.new(@api_user, @api_key)
       resp = api.message.send(:recipients => "+79213752462", :message => "Test", :test => "1")
       assert_equal(resp.success?, true)
     end
