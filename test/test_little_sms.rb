@@ -22,6 +22,11 @@ class LittleSMSTest < Test::Unit::TestCase
       end
       assert_equal(LittleSMS::Component, mes.class)
     end
+
+    should "send message" do
+      api = LittleSMS.new(:"acc-4fe53b2b", :"OZkgGZ7g")
+      api.message.send(:recipients => "+79213752462", :message => "Test", :test => "1")
+    end
   end
 end
 

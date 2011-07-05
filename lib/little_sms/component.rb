@@ -12,7 +12,7 @@ class LittleSMS
 
     def initialize(component, api_user, api_key)
       @api_uri = URI.parse("https://littlesms.ru:443/api/")
-      @auth = {:user => api_user, :key => api_key}
+      @api_user, @api_key = api_user, api_key
       @component = component # Component name. E.g. message or user.
     end
 
@@ -23,9 +23,10 @@ class LittleSMS
     private
     def request_api_method(method, options = {})
       options ||= {}
-      options.merge!(@auth)
-
+      options = Hash[options.sort]
       options[:sign] = sign_request(options)
+      options[:user] = @api_user
+
       uri = @api_uri.merge("#{@component}/#{method}")
       req = Net::HTTP::Post.new(uri.path)
       req.set_form_data(options.delete_if {|k, v| k == :key})
@@ -47,9 +48,7 @@ class LittleSMS
     end
 
     def sign_request(options)
-      Digest::MD5.hexdigest(
-          Digest::SHA1.hexdigest(options.sort.map {|e| e[1]}.join)
-        )
+      Digest::MD5.hexdigest(Digest::SHA1.hexdigest("#{@api_user}#{options.values.join}#{@api_key}"))
     end
   end
 end
