@@ -3,6 +3,7 @@ require "net/http"
 require "net/https"
 require 'digest/md5'
 require 'digest/sha1'
+require_relative "responce"
 
 class LittleSMS
   class Component
@@ -41,7 +42,7 @@ class LittleSMS
 
       case res = res.start {|http| http.request(req) }
       when Net::HTTPSuccess, Net::HTTPRedirection
-        return JSON.parse(res.body).recursive_symbolize_keys
+        return Responce.new(JSON.parse(res.body))
       else
         res.error!
       end
@@ -49,18 +50,6 @@ class LittleSMS
 
     def sign_request(options)
       Digest::MD5.hexdigest(Digest::SHA1.hexdigest("#{@api_user}#{options.values.join}#{@api_key}"))
-    end
-  end
-end
-
-# Convert all keys to symbols
-module Enumerable
-  def recursive_symbolize_keys
-    symbolize = lambda { |v| v.respond_to?(:map) ? v.recursive_symbolize_keys : v }
-    if self.kind_of? Hash
-      Hash[ self.map { |k, v| [k.to_sym, symbolize.call(v)] } ]
-    else
-      self.map { |v| symbolize.call(v) }
     end
   end
 end
