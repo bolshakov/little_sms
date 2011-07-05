@@ -25,10 +25,6 @@ class LittleSMS
       options ||= {}
       options.merge!(@auth)
 
-      # Replace original sort method
-      options.extend(self.class::Options)
-      options.method_path = {:method => method, :component => @component }
-
       options[:sign] = sign_request(options)
       uri = @api_uri.merge("#{@component}/#{method}")
       req = Net::HTTP::Post.new(uri.path)

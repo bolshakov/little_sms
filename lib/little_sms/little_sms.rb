@@ -10,6 +10,7 @@ class LittleSMS
     @components = {}
     self.instance_eval &block if block_given?
   end
+
   def method_missing(name, *args)
     @components[name] ||= Component.new(name, @api_user, @api_key)
   end

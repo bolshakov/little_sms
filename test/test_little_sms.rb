@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'shoulda'
-require 'lib/little_sms'
+require_relative '../lib/little_sms'
 
 class LittleSMSTest < Test::Unit::TestCase
   context "A LittleSMS" do
