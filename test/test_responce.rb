@@ -31,6 +31,25 @@ class ResponceTest < Test::Unit::TestCase
       assert_equal(resp.error, responce_json[:error])
       assert_equal(resp.message, responce_json[:message])
     end
+
+    should "map responce fields to methods" do
+      responce_json = {:recipients=>["79213752462"], :price=>0.5, :balance=>0, :test=>1}
+      resp = LittleSMS::Responce.new(responce_json)
+      assert_equal(resp.price, 0.5)
+      assert_equal(resp.balance, 0)
+    end
+
+    should "respond to mapped method" do
+      assert_respond_to(@resp, :foo)
+    end
+
+    should "raise error if unknown methods invoked" do
+      resp = LittleSMS::Responce.new({:foo => "foo"})
+      assert_raise NoMethodError do
+        resp.bar
+      end
+    end
+
   end
 end
 
