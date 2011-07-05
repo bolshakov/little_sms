@@ -11,7 +11,7 @@ class ComponentTest < Test::Unit::TestCase
 
     should "should sign request" do
       sign = @component.method(:sign_request).call(@options)
-      assert_equal "09e833ee103f3d274fa97b12a1d19cee", sign
+      assert_equal "b7b73316d6c90f3065c1e3dfd6686452", sign
     end
 
     should "format output" do
