@@ -3,7 +3,7 @@ require "net/http"
 require "net/https"
 require 'digest/md5'
 require 'digest/sha1'
-require_relative "enumerable"
+require_relative "responce"
 
 class LittleSMS
   class Component
@@ -42,7 +42,7 @@ class LittleSMS
 
       case res = res.start {|http| http.request(req) }
       when Net::HTTPSuccess, Net::HTTPRedirection
-        return JSON.parse(res.body).recursive_symbolize_keys
+        return Responce.new(JSON.parse(res.body))
       else
         res.error!
       end

@@ -26,7 +26,7 @@ class LittleSMSTest < Test::Unit::TestCase
     should "send message" do
       api = LittleSMS.new(:"acc-4fe53b2b", :"OZkgGZ7g")
       resp = api.message.send(:recipients => "+79213752462", :message => "Test", :test => "1")
-      assert_equal(resp[:status], "success")
+      assert_equal(resp.success?, true)
     end
   end
 end
