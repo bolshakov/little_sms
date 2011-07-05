@@ -3,10 +3,10 @@ require 'shoulda'
 require_relative '../lib/little_sms'
 
 class LittleSMSTest < Test::Unit::TestCase
+  include Auth
   context "A LittleSMS" do
     def setup
-      @api_user = :"acc-4fe53b2b"
-      @api_key = :"OZkgGZ7g"
+      @api_user, @api_key = self.auth
       @sms = LittleSMS.new @api_user, @api_key
     end
 

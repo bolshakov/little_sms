@@ -1,12 +1,13 @@
 require 'test/unit'
 require 'shoulda'
 require_relative '../lib/little_sms'
+require_relative "auth"
 
 class ComponentTest < Test::Unit::TestCase
+  include Auth
   context "A LittleSMS::Component" do
     def setup
-      @api_user = :"acc-4fe53b2b"
-      @api_key = :"OZkgGZ7g"
+      @api_user, @api_key = self.auth
       @options = {:message=>"test", :recipients=>"+79213752462", :user=>@api_user, :key=>@api_key}
       @component = LittleSMS::Component.new(:message, "Christ", "Jesus")
     end
