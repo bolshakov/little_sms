@@ -12,6 +12,18 @@ class ResponceTest < Test::Unit::TestCase
     should "create new responce object" do
       assert_equal(@resp.instance_eval { @json }, @simple_json)
     end
+
+    should "success" do
+      resp = LittleSMS::Responce.new({:status => "success"})
+      assert_equal(resp.success?, true)
+      assert_equal(resp.error?, false)
+    end
+
+    should "error" do
+      resp = LittleSMS::Responce.new({:status => "error"})
+      assert_equal(resp.error?, true)
+      assert_equal(resp.success?, false)
+    end
   end
 end
 
