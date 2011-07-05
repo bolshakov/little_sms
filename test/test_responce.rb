@@ -13,16 +13,23 @@ class ResponceTest < Test::Unit::TestCase
       assert_equal(@resp.instance_eval { @json }, @simple_json)
     end
 
-    should "success" do
+    should "success?" do
       resp = LittleSMS::Responce.new({:status => "success"})
       assert_equal(resp.success?, true)
       assert_equal(resp.error?, false)
     end
 
-    should "error" do
+    should "error?" do
       resp = LittleSMS::Responce.new({:status => "error"})
       assert_equal(resp.error?, true)
       assert_equal(resp.success?, false)
+    end
+
+    should "return error code and message" do
+      responce_json = {:status => "error", :error => 2, :message => "invalid signature"}
+      resp = LittleSMS::Responce.new(responce_json)
+      assert_equal(resp.error, responce_json[:error])
+      assert_equal(resp.message, responce_json[:message])
     end
   end
 end
