@@ -3,10 +3,10 @@ require 'shoulda'
 require_relative '../lib/little_sms'
 
 class LittleSMSTest < Test::Unit::TestCase
+  include Auth
   context "A LittleSMS" do
     def setup
-      @api_user = :testapiuser
-      @api_key = :testapikeystring
+      @api_user, @api_key = self.auth
       @sms = LittleSMS.new @api_user, @api_key
     end
 
@@ -24,8 +24,9 @@ class LittleSMSTest < Test::Unit::TestCase
     end
 
     should "send message" do
-      api = LittleSMS.new(:"acc-4fe53b2b", :"OZkgGZ7g")
-      api.message.send(:recipients => "+79213752462", :message => "Test", :test => "1")
+      api = LittleSMS.new(@api_user, @api_key)
+      resp = api.message.send(:recipients => "+79213752462", :message => "Test", :test => "1")
+      assert_equal(resp.success?, true)
     end
   end
 end
