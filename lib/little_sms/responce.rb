@@ -3,7 +3,7 @@ require_relative "enumerable"
 class LittleSMS
   class Responce
     def initialize(json)
-      @json = json.recursive_symbolize_keys
+      @json = json.symbolize_keys
     end
 
     def success?
