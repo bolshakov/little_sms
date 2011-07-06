@@ -1,8 +1,8 @@
 require "json"
 require "net/http"
 require "net/https"
-require 'digest/md5'
-require 'digest/sha1'
+require "digest/md5"
+require "digest/sha1"
 require_relative "responce"
 
 class LittleSMS
@@ -23,9 +23,7 @@ class LittleSMS
 
     private
     def request_api_method(method, options = {})
-      options ||= {}
-      options = Hash[options.sort]
-      options[:sign] = sign_request(options)
+      options[:sign] = sign_request(options || {})
       options[:user] = @api_user
 
       uri = @api_uri.merge("#{@component}/#{method}")
@@ -33,9 +31,9 @@ class LittleSMS
       req.set_form_data(options.delete_if {|k, v| k == :key})
 
       uri.scheme, uri.port, use_ssl = if LittleSMS.use_ssl
-        ['https', 443, true]
+        ["https", 443, true]
       else
-        ['http', 80, false]
+        ["http", 80, false]
       end
       res = Net::HTTP.new(uri.host, uri.port)
       res.use_ssl = use_ssl
@@ -49,7 +47,8 @@ class LittleSMS
     end
 
     def sign_request(options)
-      Digest::MD5.hexdigest(Digest::SHA1.hexdigest("#{@api_user}#{options.values.join}#{@api_key}"))
+      sorted_options = options.map{|k, v| [k.to_s, v]}.sort.inject(""){|str, value| str += value[1].to_s}
+      Digest::MD5.hexdigest(Digest::SHA1.hexdigest("#{@api_user}#{sorted_options}#{@api_key}"))
     end
   end
 end

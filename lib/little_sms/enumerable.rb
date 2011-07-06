@@ -1,11 +1,18 @@
 # Convert all keys to symbols
 module Enumerable
-  def recursive_symbolize_keys
-    symbolize = lambda { |v| v.respond_to?(:map) ? v.recursive_symbolize_keys : v }
-    if self.kind_of? Hash
-      Hash[ self.map { |k, v| [k.to_sym, symbolize.call(v)] } ]
+  def symbolize_keys
+    symbolize = lambda { |v| v.respond_to?(:map) ? v.symbolize_keys : v }
+    case self
+    when Hash
+      Hash[ self.map { |key, value|
+        k = key.kind_of?(String) ? key.to_sym : key
+        v = symbolize.call(value)
+        [k, v]
+      }]
+    when Array
+      self.map { |value| symbolize.call(value) }
     else
-      self.map { |v| symbolize.call(v) }
+      self
     end
   end
 end

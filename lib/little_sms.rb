@@ -1,9 +1,7 @@
-libdir = File.dirname(__FILE__)
-$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+require "require_relative" unless Kernel.respond_to?(:require_relative)
 
-require "#{libdir}/little_sms/component"
-require "#{libdir}/little_sms/little_sms"
-
+require_relative "./little_sms/component"
+require_relative "./little_sms/little_sms"
 
 class LittleSMS; end
 
