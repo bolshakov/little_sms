@@ -10,7 +10,6 @@ GEM
     rake (0.8.7)
     rbx-require-relative (0.0.5)
     rcov (0.9.9)
-    shoulda (2.11.3)
 
 PLATFORMS
   ruby
@@ -21,4 +20,3 @@ DEPENDENCIES
   json_pure
   rbx-require-relative
   rcov
-  shoulda
