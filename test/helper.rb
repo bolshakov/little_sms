@@ -1,6 +1,5 @@
-require "require_relative" if RUBY_VERSION.start_with?('1.8')
+require "require_relative" unless Kernel.respond_to?(:require_relative)
 require 'test/unit'
-#require 'shoulda'
 require_relative '../lib/little_sms'
 
 module Auth
