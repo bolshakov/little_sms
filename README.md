@@ -1,5 +1,5 @@
 # LittleSMS
-This gem provides access to LittleSMS.ru API from ruby.
+This gem provides access to LittleSMS.ru API from ruby (mri 1.8.7 and 1.9.2 supported).
 
 # Installation
     $ gem install little_sms
