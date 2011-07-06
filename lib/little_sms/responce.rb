@@ -15,11 +15,11 @@ class LittleSMS
     end
 
     def error
-      if error? then @json[:error] else nil end
+      @json[:error] if error?
     end
 
     def message
-      if error? then @json[:message] else nil end
+      @json[:message] if error?
     end
 
     def method_missing(name, *args)
