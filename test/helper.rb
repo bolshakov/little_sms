@@ -1,6 +1,6 @@
 require "require_relative" unless Kernel.respond_to?(:require_relative)
-require 'test/unit'
-require_relative '../lib/little_sms'
+require "test/unit"
+require_relative "../lib/little_sms"
 
 module Auth
   def self.included(other)

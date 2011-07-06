@@ -1,8 +1,8 @@
 require "json"
 require "net/http"
 require "net/https"
-require 'digest/md5'
-require 'digest/sha1'
+require "digest/md5"
+require "digest/sha1"
 require_relative "responce"
 
 class LittleSMS
@@ -31,9 +31,9 @@ class LittleSMS
       req.set_form_data(options.delete_if {|k, v| k == :key})
 
       uri.scheme, uri.port, use_ssl = if LittleSMS.use_ssl
-        ['https', 443, true]
+        ["https", 443, true]
       else
-        ['http', 80, false]
+        ["http", 80, false]
       end
       res = Net::HTTP.new(uri.host, uri.port)
       res.use_ssl = use_ssl
