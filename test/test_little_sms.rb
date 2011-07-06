@@ -1,6 +1,4 @@
-require 'test/unit'
-require 'shoulda'
-require_relative '../lib/little_sms'
+require File.expand_path(File.dirname(__FILE__) + '/helper')
 
 class LittleSMSTest < Test::Unit::TestCase
   include Auth

@@ -1,7 +1,4 @@
-require 'test/unit'
-require 'shoulda'
-require_relative '../lib/little_sms'
-require_relative "auth"
+require File.expand_path(File.dirname(__FILE__) + '/helper')
 
 class ComponentTest < Test::Unit::TestCase
   include Auth

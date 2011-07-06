@@ -8,6 +8,7 @@ GEM
       rake
     json_pure (1.4.6)
     rake (0.8.7)
+    rbx-require-relative (0.0.5)
     rcov (0.9.9)
     shoulda (2.11.3)
 
@@ -18,5 +19,6 @@ DEPENDENCIES
   bundler
   jeweler
   json_pure
+  rbx-require-relative
   rcov
   shoulda

@@ -1,6 +1,4 @@
-require "test/unit"
-require "shoulda"
-require_relative "../lib/little_sms/responce"
+require File.expand_path(File.dirname(__FILE__) + '/helper')
 
 class ResponceTest < Test::Unit::TestCase
   context "A Responce" do
